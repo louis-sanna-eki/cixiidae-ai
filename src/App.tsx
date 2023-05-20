@@ -146,7 +146,7 @@ const HomePage = function HomePage() {
         <div className="container mx-auto dark:bg-zinc-900 dark:text-gray-50">
             <div className="text-5xl font-extrabold flex justify-center mt-8">
                 <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-                    VizGPT
+                    CixiidaeGPT
                 </h1>
                 
             </div>
