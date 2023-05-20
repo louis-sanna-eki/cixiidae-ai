@@ -31,10 +31,9 @@ export default async function (req: VercelRequest, res: VercelResponse) {
             You should create the vega-lite specification based on user's query.
 
             Besides, Here are some requirements:
-            1. Do not contain the key called 'data' in vega-lite specification.
-            2. If the user ask many times, you should generate the specification based on the previous context.
-            3. You should consider to aggregate the field if it is quantitative and the chart has a mark type of react, bar, line, area or arc.
-            4. The available fields in the dataset and their types are:
+            1. Always set 'data' as an empty object.
+            2. Consider to aggregate the field if it is quantitative and the chart has a mark type of react, bar, line, area or arc.
+            3. The available fields in the dataset and their types are:
             ${metas
                 .map((field) => `${field.fid} (${field.semanticType})`)
                 .join(", ")}
@@ -50,7 +49,12 @@ export default async function (req: VercelRequest, res: VercelResponse) {
     if (messages[messages.length - 1].role === "user") {
         messages[
             messages.length - 1
-        ].content = `Translate text delimited by triple backticks into vega-lite specification in JSON string.
+        ].content = `Translate text delimited by triple backticks into vega-lite specification in JSON string. 
+        The available fields in the dataset and their types are:
+            ${metas
+                .map((field) => `${field.fid} (${field.semanticType})`)
+                .join(", ")}
+        Guess the chart type if needed, but always use available fields.
         \`\`\`
         ${messages[messages.length - 1].content}
         \`\`\`
