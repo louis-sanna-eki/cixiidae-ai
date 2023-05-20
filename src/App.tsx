@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { useCallback, useEffect, useState } from "react";
-import { track } from '@vercel/analytics';
+import { track } from "@vercel/analytics";
 import { IMessage, chatCompletation } from "./services/llm";
 import { matchQuote } from "./utils";
 import { IDataset } from "./interface";
@@ -30,15 +30,9 @@ type DSItem =
 
 const EXAMPLE_DATASETS: DSItem[] = [
     {
-        key: "cars",
-        name: "Cars Dataset",
-        url: "/datasets/cars.json",
-        type: "demo",
-    },
-    {
-        key: "students",
-        name: "Students Dataset",
-        url: "/datasets/students.json",
+        key: "cixiidae-localization",
+        name: "Cixiidae localization",
+        url: "/datasets/cixiidae-localization.json",
         type: "demo",
     },
 ];
@@ -49,15 +43,12 @@ const HomePage = function HomePage() {
     const [dataset, setDataset] = useState<IDataset | null>(null);
     const [dsList, setDsList] = useState<DSItem[]>(EXAMPLE_DATASETS);
     const [pivotKey, setPivotKey] = useState<string>("viz");
-    const [datasetKey, setDatasetKey] = useState<string>(
-        EXAMPLE_DATASETS[0].key
-    );
+    const [datasetKey, setDatasetKey] = useState<string>(EXAMPLE_DATASETS[0].key);
     const [chat, setChat] = useState<IMessage[]>([]);
     const { notify } = useNotification();
 
     useEffect(() => {
-        const currentDatasetInfo =
-            dsList.find((dataset) => dataset.key === datasetKey) ?? dsList[0];
+        const currentDatasetInfo = dsList.find((dataset) => dataset.key === datasetKey) ?? dsList[0];
         if (currentDatasetInfo.type === "demo") {
             fetch(currentDatasetInfo.url)
                 .then((res) => res.json())
@@ -86,22 +77,23 @@ const HomePage = function HomePage() {
             content: userQuery,
         };
         const fields = dataset?.fields ?? [];
-        track('query', { query: userQuery, chatSize: chat.length, keys: fields.map(f => f.fid).join(',') })
+        track("query", { query: userQuery, chatSize: chat.length, keys: fields.map((f) => f.fid).join(",") });
         chatCompletation([...chat, latestQuery], fields)
             .then((res) => {
                 if (res.choices.length > 0) {
-                    const spec = matchQuote(
-                        res.choices[0].message.content,
-                        "{",
-                        "}"
-                    );
+                    const spec = matchQuote(res.choices[0].message.content, "{", "}");
                     if (spec) {
                         setChat([...chat, latestQuery, res.choices[0].message]);
                     } else {
-                        setChat([...chat, latestQuery, {
-                            role: 'assistant',
-                            content: 'There is no relative visualization for your query. Please check the dataset and try again.',
-                        }]);
+                        setChat([
+                            ...chat,
+                            latestQuery,
+                            {
+                                role: "assistant",
+                                content:
+                                    "There is no relative visualization for your query. Please check the dataset and try again.",
+                            },
+                        ]);
                         // throw new Error(
                         //     "No visualization matches your instruction.\n" +
                         //         res.choices[0].message.content
@@ -132,12 +124,15 @@ const HomePage = function HomePage() {
     const feedbackHandler = useCallback(
         (messages: IMessage[], mIndex: number, action: string) => {
             // todo: implement feedback handler
-            track('feedback', { query: messages[0]?.content, ans: messages[1]?.content, action })
-            notify({
-                title: "Feedback",
-                message: "Thanks for your feedback!",
-                type: "success",
-            }, 1000)
+            track("feedback", { query: messages[0]?.content, ans: messages[1]?.content, action });
+            notify(
+                {
+                    title: "Feedback",
+                    message: "Thanks for your feedback!",
+                    type: "success",
+                },
+                1000
+            );
         },
         [notify]
     );
@@ -148,7 +143,6 @@ const HomePage = function HomePage() {
                 <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
                     CixiidaeGPT
                 </h1>
-                
             </div>
             <p className="text-center my-2">
                 Make contextual data visualization with Chat Interface from tabular datasets.
@@ -185,9 +179,7 @@ const HomePage = function HomePage() {
                         <button
                             type="button"
                             className={`relative inline-flex items-center rounded-l-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-50 ring-1 ring-inset ring-gray-300 dark:ring-gray-500 hover:bg-indigo-500 hover:text-white focus:z-10 ${
-                                pivotKey === "viz"
-                                    ? "bg-indigo-600 border-indigo-600 text-white"
-                                    : ""
+                                pivotKey === "viz" ? "bg-indigo-600 border-indigo-600 text-white" : ""
                             }`}
                             onClick={() => {
                                 setPivotKey("viz");
@@ -198,9 +190,7 @@ const HomePage = function HomePage() {
                         <button
                             type="button"
                             className={`relative -ml-px inline-flex items-center rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-50 ring-1 ring-inset ring-gray-300 dark:ring-gray-500 hover:bg-indigo-500 hover:text-white focus:z-10 ${
-                                pivotKey === "data"
-                                    ? "bg-indigo-600 border-indigo-600 text-white"
-                                    : ""
+                                pivotKey === "data" ? "bg-indigo-600 border-indigo-600 text-white" : ""
                             }`}
                             onClick={() => {
                                 setPivotKey("data");
@@ -232,7 +222,7 @@ const HomePage = function HomePage() {
                                         newChat.splice(mIndex, 2);
                                         return newChat;
                                     });
-                                } else if (message.role === 'assistant') {
+                                } else if (message.role === "assistant") {
                                     setChat((c) => {
                                         const newChat = [...c];
                                         newChat.splice(mIndex - 1, 2);
@@ -272,9 +262,7 @@ const HomePage = function HomePage() {
                             onClick={startQuery}
                         >
                             Visualize
-                            {!loading && (
-                                <PaperAirplaneIcon className="w-4 ml-1" />
-                            )}
+                            {!loading && <PaperAirplaneIcon className="w-4 ml-1" />}
                             {loading && <Spinner />}
                         </button>
                     </div>
@@ -287,15 +275,12 @@ const HomePage = function HomePage() {
                             data={dataset.dataSource}
                             metas={dataset.fields}
                             onMetaChange={(fid, fIndex, meta) => {
-                                const nextDataset = produce(
-                                    dataset,
-                                    (draft) => {
-                                        draft.fields[fIndex] = {
-                                            ...draft.fields[fIndex],
-                                            ...meta,
-                                        };
-                                    }
-                                );
+                                const nextDataset = produce(dataset, (draft) => {
+                                    draft.fields[fIndex] = {
+                                        ...draft.fields[fIndex],
+                                        ...meta,
+                                    };
+                                });
                                 setDataset(nextDataset);
                             }}
                         />
