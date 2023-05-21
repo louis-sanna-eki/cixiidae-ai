@@ -106,7 +106,7 @@ const NotificationWrapper: React.FC<{ children: ReactElement }> = (props) => {
                                         <div className="ml-4 flex flex-shrink-0">
                                             <button
                                                 type="button"
-                                                className="inline-flex rounded-md bg-zinc-900 text-gray-400 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                                className="inline-flex rounded-md bg-zinc-900 text-gray-400 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                                                 onClick={() => {
                                                     setShow(false);
                                                 }}

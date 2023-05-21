@@ -40,7 +40,7 @@ export default function DatasetCreation(props: DatasetCreationProps) {
         <div>
             <button
                 type="button"
-                className="ml-4 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="ml-4 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                 onClick={() => {
                     fileRef.current?.click();
                 }}
@@ -77,7 +77,7 @@ export default function DatasetCreation(props: DatasetCreationProps) {
                 <div>
                     <button
                         type="button"
-                        className="ml-4 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="ml-4 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                         onClick={() => {
                             if (tmpDataset) {
                                 onDatasetCreated(tmpDataset as IDataset);

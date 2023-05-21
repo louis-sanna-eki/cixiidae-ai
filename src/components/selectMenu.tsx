@@ -26,7 +26,7 @@ export default function SelectMenu(props: MenuProps) {
                         {label}
                     </Listbox.Label>
                     <div className="relative mt-2">
-                        <Listbox.Button className="relative w-full cursor-default rounded-md bg-white dark:bg-zinc-900 py-1.5 pl-3 pr-10 text-left text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <Listbox.Button className="relative w-full cursor-default rounded-md bg-white dark:bg-zinc-900 py-1.5 pl-3 pr-10 text-left text-gray-900 dark:text-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-500 focus:outline-none focus:ring-2 focus:ring-green-600 sm:text-sm sm:leading-6">
                             <span className="block truncate">
                                 {selectedItem?.name}
                             </span>
@@ -52,7 +52,7 @@ export default function SelectMenu(props: MenuProps) {
                                         className={({ active }) =>
                                             classNames(
                                                 active
-                                                    ? "bg-indigo-600 text-white"
+                                                    ? "bg-green-600 text-white"
                                                     : "text-gray-900 dark:text-gray-50",
                                                 "relative cursor-default select-none py-2 pl-3 pr-9"
                                             )
@@ -77,7 +77,7 @@ export default function SelectMenu(props: MenuProps) {
                                                         className={classNames(
                                                             active
                                                                 ? "text-white"
-                                                                : "text-indigo-600",
+                                                                : "text-green-600",
                                                             "absolute inset-y-0 right-0 flex items-center pr-4"
                                                         )}
                                                     >

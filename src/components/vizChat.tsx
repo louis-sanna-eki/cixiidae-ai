@@ -30,7 +30,7 @@ const VizChat: React.FC<VizChatProps> = ({ messages, dataset, onDelete, onUserFe
                         return (
                             <div className="p-4 flex justify-top" key={index}>
                                 <div className="grow-0">
-                                    <div className="inline-block h-10 w-10 rounded-full mx-4 bg-indigo-500 text-white flex items-center justify-center">
+                                    <div className="inline-block h-10 w-10 rounded-full mx-4 bg-green-500 text-white flex items-center justify-center">
                                         <CpuChipIcon className="w-6" />
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@ const VizChat: React.FC<VizChatProps> = ({ messages, dataset, onDelete, onUserFe
                         return (
                             <div className="p-4 flex justify-top" key={index}>
                                 <div className="grow-0">
-                                    <div className="inline-block h-10 w-10 rounded-full mx-4 bg-indigo-500 text-white flex items-center justify-center">
+                                    <div className="inline-block h-10 w-10 rounded-full mx-4 bg-green-500 text-white flex items-center justify-center">
                                         <CpuChipIcon className="w-6" />
                                     </div>
                                 </div>

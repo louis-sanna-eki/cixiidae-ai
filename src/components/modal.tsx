@@ -71,7 +71,7 @@ const Modal: React.FC<ModalProps> = (props) => {
                 <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
                     <button
                         type="button"
-                        className="rounded-md bg-white dark:bg-zinc-900 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="rounded-md bg-white dark:bg-zinc-900 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                         onClick={() => {
                             onClose?.();
                         }}

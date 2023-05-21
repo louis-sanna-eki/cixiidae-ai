@@ -8,7 +8,7 @@ export default {
     },
     safelist: [
         {
-            pattern: /(bg|border)-(indigo)-([1-9]00)/,
+            pattern: /(bg|border)-(green)-([1-9]00)/,
         }
     ],
     plugins: [forms],

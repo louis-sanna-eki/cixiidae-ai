@@ -48,7 +48,7 @@ function getSemanticColors(field: IField): string {
         case "nominal":
             return "border border-transparent bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-100 dark:border-sky-600";
         case "ordinal":
-            return "border border-transparent bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100 dark:border-indigo-600";
+            return "border border-transparent bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 dark:border-green-600";
         case "quantitative":
             return "border border-transparent bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100 dark:border-purple-600";
         case "temporal":
