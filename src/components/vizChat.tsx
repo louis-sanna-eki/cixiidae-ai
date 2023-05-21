@@ -25,6 +25,7 @@ const VizChat: React.FC<VizChatProps> = ({ messages, dataset, onDelete, onUserFe
         <div className="border-2 border-zinc-100 dark:border-zinc-800 overflow-y-auto" ref={container} style={{ maxHeight: "80vh" }}>
             {messages.map((message, index) => {
                 if (message.role === "assistant") {
+                    console.log("message.content", message.content);
                     const spec = getValidVegaSpec(message.content);
                     if (spec) {
                         return (
@@ -35,7 +36,14 @@ const VizChat: React.FC<VizChatProps> = ({ messages, dataset, onDelete, onUserFe
                                     </div>
                                 </div>
                                 <div className="grow pl-8">
-                                    <ReactVega spec={spec} data={dataset.dataSource ?? []} />
+                                    {message.content.split(/```json|```/).map((chunk) => {
+                                        console.log("chunk", chunk)
+                                        if (chunk.trim().startsWith("{")) {
+                                            return <ReactVega spec={JSON.parse(chunk)} data={dataset.dataSource ?? []} />
+                                        }
+                                        return <>{chunk}<br/></>
+                                    })}
+                                    <br/>
                                 </div>
                                 <div className="float-right flex gap-4 items-start">
                                     <HandThumbUpIcon
