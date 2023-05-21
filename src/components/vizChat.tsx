@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { IDataset } from "../interface";
 import { IMessage } from "../services/llm";
-import { getValidVegaSpec } from "../utils";
 import ReactVega from "./react-vega";
 import { HandThumbDownIcon, HandThumbUpIcon, TrashIcon, UserIcon } from "@heroicons/react/20/solid";
 import { CpuChipIcon } from "@heroicons/react/24/outline";
@@ -22,63 +21,38 @@ const VizChat: React.FC<VizChatProps> = ({ messages, dataset, onDelete, onUserFe
         }
     }, [messages]);
     return (
-        <div className="border-2 border-zinc-100 dark:border-zinc-800 overflow-y-auto" ref={container} style={{ maxHeight: "80vh" }}>
+        <div
+            className="border-2 border-zinc-100 dark:border-zinc-800 overflow-y-auto"
+            ref={container}
+            style={{ maxHeight: "80vh" }}
+        >
             {messages.map((message, index) => {
                 if (message.role === "assistant") {
                     console.log("message.content", message.content);
-                    const spec = getValidVegaSpec(message.content);
-                    if (spec) {
-                        return (
-                            <div className="p-4 flex justify-top" key={index}>
-                                <div className="grow-0">
-                                    <div className="inline-block h-10 w-10 rounded-full mx-4 bg-green-500 text-white flex items-center justify-center">
-                                        <CpuChipIcon className="w-6" />
-                                    </div>
-                                </div>
-                                <div className="grow pl-8">
-                                    {message.content.split(/```json|```/).map((chunk) => {
-                                        console.log("chunk", chunk)
-                                        if (chunk.trim().startsWith("{")) {
-                                            return <ReactVega spec={JSON.parse(chunk)} data={dataset.dataSource ?? []} />
-                                        }
-                                        return <>{chunk}<br/></>
-                                    })}
-                                    <br/>
-                                </div>
-                                <div className="float-right flex gap-4 items-start">
-                                    <HandThumbUpIcon
-                                        className="w-4 text-gray-500 dark:text-gray-300 cursor-pointer hover:scale-125"
-                                        onClick={() => {
-                                            onUserFeedback &&
-                                                onUserFeedback([messages[index - 1], message], index, "like");
-                                        }}
-                                    />
-                                    <HandThumbDownIcon
-                                        className="w-4 text-gray-500 dark:text-gray-300 cursor-pointer hover:scale-125"
-                                        onClick={() => {
-                                            onUserFeedback &&
-                                                onUserFeedback([messages[index - 1], message], index, "dislike");
-                                        }}
-                                    />
-                                    <TrashIcon
-                                        className="w-4 text-gray-500 dark:text-gray-300 cursor-pointer hover:scale-125"
-                                        onClick={() => {
-                                            onDelete && onDelete(message, index);
-                                        }}
-                                    />
+                    return (
+                        <div className="p-4 flex justify-top" key={index}>
+                            <div className="grow-0">
+                                <div className="h-10 w-10 rounded-full mx-4 bg-green-500 text-white flex items-center justify-center">
+                                    <CpuChipIcon className="w-6" />
                                 </div>
                             </div>
-                        );
-                    } else {
-                        return (
-                            <div className="p-4 flex justify-top" key={index}>
-                                <div className="grow-0">
-                                    <div className="inline-block h-10 w-10 rounded-full mx-4 bg-green-500 text-white flex items-center justify-center">
-                                        <CpuChipIcon className="w-6" />
-                                    </div>
-                                </div>
-                                <div className="grow pl-8 overflow-x-auto">
-                                    <p>{message.content}</p>
+                            <div className="grow pl-8">
+                                {message.content.split(/```json|```/).map((chunk) => {
+                                    console.log("chunk", chunk);
+                                    if (chunk.trim().startsWith("{")) {
+                                        return <><ReactVega spec={JSON.parse(chunk)} data={dataset.dataSource ?? []} /><br /></>;
+                                    }
+                                    return (
+                                        <>
+                                            {chunk}
+                                            <br />
+                                        </>
+                                    );
+                                })}
+                                <br />
+                                {message.content.includes("json") ? (
+                                    <></>
+                                ) : (
                                     <DataTable
                                         data={dataset.dataSource}
                                         metas={dataset.fields}
@@ -86,15 +60,36 @@ const VizChat: React.FC<VizChatProps> = ({ messages, dataset, onDelete, onUserFe
                                             console.log("meta changed");
                                         }}
                                     />
-                                </div>
+                                )}
                             </div>
-                        );
-                    }
+                            <div className="float-right flex gap-4 items-start">
+                                <HandThumbUpIcon
+                                    className="w-4 text-gray-500 dark:text-gray-300 cursor-pointer hover:scale-125"
+                                    onClick={() => {
+                                        onUserFeedback && onUserFeedback([messages[index - 1], message], index, "like");
+                                    }}
+                                />
+                                <HandThumbDownIcon
+                                    className="w-4 text-gray-500 dark:text-gray-300 cursor-pointer hover:scale-125"
+                                    onClick={() => {
+                                        onUserFeedback &&
+                                            onUserFeedback([messages[index - 1], message], index, "dislike");
+                                    }}
+                                />
+                                <TrashIcon
+                                    className="w-4 text-gray-500 dark:text-gray-300 cursor-pointer hover:scale-125"
+                                    onClick={() => {
+                                        onDelete && onDelete(message, index);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    );
                 }
                 return (
                     <div className="p-4 bg-zinc-100 dark:bg-zinc-800 flex" key={index}>
                         <div className="grow-0">
-                            <div className="inline-block h-10 w-10 rounded-full mx-4 bg-green-500 text-white flex items-center justify-center">
+                            <div className="h-10 w-10 rounded-full mx-4 bg-green-500 text-white flex items-center justify-center">
                                 <UserIcon className="w-6" />
                             </div>
                         </div>

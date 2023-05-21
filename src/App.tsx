@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
 import { IMessage, chatCompletation } from "./services/llm";
-import { matchQuote } from "./utils";
 import { IDataset } from "./interface";
 import VizChat from "./components/vizChat";
 import SelectMenu from "./components/selectMenu";
@@ -81,24 +80,7 @@ const HomePage = function HomePage() {
         chatCompletation([...chat, latestQuery], fields)
             .then((res) => {
                 if (res.choices.length > 0) {
-                    const spec = matchQuote(res.choices[0].message.content, "{", "}");
-                    if (spec) {
-                        setChat([...chat, latestQuery, res.choices[0].message]);
-                    } else {
-                        setChat([
-                            ...chat,
-                            latestQuery,
-                            {
-                                role: "assistant",
-                                content:
-                                    "There is no relative visualization for your query. Please check the dataset and try again.",
-                            },
-                        ]);
-                        // throw new Error(
-                        //     "No visualization matches your instruction.\n" +
-                        //         res.choices[0].message.content
-                        // );
-                    }
+                    setChat([...chat, latestQuery, res.choices[0].message]);
                 }
             })
             .catch((err) => {
